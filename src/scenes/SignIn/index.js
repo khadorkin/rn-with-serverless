@@ -1,9 +1,11 @@
 import React from 'react';
 import {
-  AsyncStorage,
   Button,
   View,
 } from 'react-native';
+import {
+  SecureStore
+} from 'expo';
 
 import { styles } from '../../components/DesignSystem';
 
@@ -21,7 +23,7 @@ export default class SignIn extends React.Component {
   }
 
   _signInAsync = async () => {
-    await AsyncStorage.setItem('userToken', 'abc');
+    await SecureStore.setItemAsync('token', 'abc');
     this.props.navigation.navigate('App');
   };
 };
