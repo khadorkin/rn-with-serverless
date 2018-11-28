@@ -14,32 +14,32 @@ export default class AuthLoading extends React.Component {
 
     async componentDidMount () {
       // TODO: stop animation
-      this._askCredentials()
+      this._askCredentials();
     }
     
     componentWillUnmount () {
       // TODO: reset animation
     }
 
-    _getCredentials = async () => {
+    _getUserStatus = async () => {
       try {
-        const token = await SecureStore.getItemAsync('token');
-        if (token) {
+        const auth = await SecureStore.getItemAsync('auth');
+        if (auth) {
           return true;
         }
-      } catch (token) {
+      } catch (error) {
         console.log('Secure store couldn\'t be accessed!', error);
       }
       return false;
     }
 
     _askCredentials = async () => {
-      const token = await this._getCredentials()
-      if (token) {
-        this.props.navigation.navigate('App')
+      const ok = await this._getUserStatus();
+      if (ok) {
+        this.props.navigation.navigate('App');
       } else {
         setTimeout(() => {
-          this.props.navigation.navigate('Auth')
+          this.props.navigation.navigate('Auth');
         }, 3000)
       }
     }

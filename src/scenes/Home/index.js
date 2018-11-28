@@ -2,8 +2,12 @@ import React from 'react';
 import {
   View,
   Button,
-  AsyncStorage
+  Linking
 } from 'react-native';
+import {
+  AuthSession,
+  SecureStore
+} from 'expo';
 
 import { styles } from '../../components/DesignSystem';
 
@@ -26,7 +30,21 @@ export default class Home extends React.Component {
   };
 
   _signOut = async () => {
-    await AsyncStorage.clear();
+    // retrieve authorization info from secure storage
+    const auth = await SecureStore.getItemAsync('auth');
+
+    // logout from keycloak
+    let redirectUrl = AuthSession.getRedirectUrl();
+    
+    // TODO: use WebView for SSO interactions
+    Linking.openURL(
+      `http://192.168.1.3:32089/auth/realms/justice-league/protocol/openid-connect/logout` +
+      `?redirect_uri=${encodeURIComponent(redirectUrl)}`
+    );
+
+    // delete secure store data
+    await SecureStore.deleteItemAsync('auth');
+
     this.props.navigation.navigate('Auth');
   };
 };
