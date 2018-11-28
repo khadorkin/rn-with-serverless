@@ -32,10 +32,9 @@ export default class Home extends React.Component {
   _signOut = async () => {
     // TODO: use WebView for SSO interactions
     // logout from keycloak
-    let redirectUrl = AuthSession.getRedirectUrl();
     Linking.openURL(
       `${process.env.OAUTH_URL}/auth/realms/${process.env.OAUTH_REALM}/protocol/openid-connect/logout` +
-      `?redirect_uri=${encodeURIComponent(redirectUrl)}`
+      `?redirect_uri=${encodeURIComponent(process.env.APP_ROOT_URL)}`
     );
 
     // delete secure store auth data
