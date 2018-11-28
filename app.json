@@ -30,7 +30,7 @@
     "detach": {
       "androidExpoViewUrl": "https://s3.amazonaws.com/exp-exponent-view-code/android-v2.9.2-sdk31.0.0-d1776f37-d524-4fee-872d-6807b0fd83ff.tar.gz"
     },
-    "scheme": "exp7355855e5bc24fc2bf1ac0586f528065",
+    "scheme": "rnwithserverless",
     "android": {
       "package": "br.rnwithserverless.app",
       "publishBundlePath": "android/app/src/main/assets/shell-app.bundle",
