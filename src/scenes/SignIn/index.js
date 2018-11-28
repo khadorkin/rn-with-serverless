@@ -37,7 +37,7 @@ export default class SignIn extends React.Component {
     let redirectUrl = AuthSession.getRedirectUrl();
     let auth = await AuthSession.startAsync({
       authUrl:
-        `${process.env.OAUTH_URL}/auth/realms/${process.env.OAUTH_REALM}/protocol/openid-connect/auth?response_type=token` +
+        `${process.env.OAUTH_URL}/auth/realms/${process.env.OAUTH_REALM}/protocol/openid-connect/auth?response_type=code` +
         `&client_id=${process.env.OAUTH_CLIENT_ID}` +
         `&client_secret=${process.env.OAUTH_CLIENT_SECRET}` +
         `&redirect_uri=${encodeURIComponent(redirectUrl)}`,
