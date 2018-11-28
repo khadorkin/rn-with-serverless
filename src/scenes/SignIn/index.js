@@ -1,15 +1,13 @@
 import React from 'react';
 import {
-  Button,
   View,
+  Button,
+  Text
 } from 'react-native';
 import {
   AuthSession,
   SecureStore
 } from 'expo';
-
-// TODO: use .env for commom configs
-// import Config from 'react-native-config';
 
 import { styles } from '../../components/DesignSystem';
 
@@ -39,9 +37,9 @@ export default class SignIn extends React.Component {
     let redirectUrl = AuthSession.getRedirectUrl();
     let auth = await AuthSession.startAsync({
       authUrl:
-        `http://192.168.1.3:32089/auth/realms/justice-league/protocol/openid-connect/auth?response_type=token` +
-        `&client_id=rn-with-serverless` +
-        `&client_secret=<client_secret>` +
+        `${process.env.OAUTH_URL}/auth/realms/${process.env.OAUTH_REALM}/protocol/openid-connect/auth?response_type=token` +
+        `&client_id=${process.env.OAUTH_CLIENT_ID}` +
+        `&client_secret=${process.env.OAUTH_CLIENT_SECRET}` +
         `&redirect_uri=${encodeURIComponent(redirectUrl)}`,
     });
 

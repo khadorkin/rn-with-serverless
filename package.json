@@ -27,6 +27,7 @@
   "homepage": "https://github.com/vniche/rn-with-serverless#readme",
   "dependencies": {
     "@babel/runtime": "7.0.0-beta.55",
+    "babel-plugin-inline-dotenv": "^1.2.0",
     "expo": "^31.0.2",
     "expokit": "31.0.2",
     "react": "16.5.0",
