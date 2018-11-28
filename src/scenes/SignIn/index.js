@@ -9,6 +9,8 @@ import {
   SecureStore
 } from 'expo';
 
+import Config from 'react-native-config';
+
 import { styles } from '../../components/DesignSystem';
 
 export default class SignIn extends React.Component {
@@ -37,9 +39,9 @@ export default class SignIn extends React.Component {
     let redirectUrl = AuthSession.getRedirectUrl();
     let auth = await AuthSession.startAsync({
       authUrl:
-        `${process.env.OAUTH_URL}/auth/realms/${process.env.OAUTH_REALM}/protocol/openid-connect/auth?response_type=code` +
-        `&client_id=${process.env.OAUTH_CLIENT_ID}` +
-        `&client_secret=${process.env.OAUTH_CLIENT_SECRET}` +
+        `${Config.OAUTH_URL}/auth/realms/${Config.OAUTH_REALM}/protocol/openid-connect/auth?response_type=code` +
+        `&client_id=${Config.OAUTH_CLIENT_ID}` +
+        `&client_secret=${Config.OAUTH_CLIENT_SECRET}` +
         `&redirect_uri=${encodeURIComponent(redirectUrl)}`,
     });
 

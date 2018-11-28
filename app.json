@@ -1,4 +1,6 @@
 {
+  "name": "rnwithserverless",
+  "displayName": "rn-with-serverless",
   "expo": {
     "name": "rn-with-serverless",
     "description": "Sample application backed by serverless protected (RBAC) functions.",
