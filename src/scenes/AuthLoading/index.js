@@ -4,9 +4,6 @@ import {
   ActivityIndicator,
   StatusBar
 } from 'react-native';
-import {
-  SecureStore
-} from 'expo';
 
 import { styles } from '../../components/DesignSystem';
 
@@ -23,7 +20,7 @@ export default class AuthLoading extends React.Component {
 
     _getUserStatus = async () => {
       try {
-        const auth = await SecureStore.getItemAsync('auth');
+        const auth = true; //await SecureStore.getItemAsync('auth');
         if (auth) {
           return true;
         }
