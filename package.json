@@ -27,6 +27,7 @@
     "babel-plugin-inline-dotenv": "^1.2.0",
     "react": "^16.6.3",
     "react-native": "^0.57.7",
+    "react-native-app-auth": "^4.0.0",
     "react-native-gesture-handler": "^1.0.10",
     "react-navigation": "^3.0.0"
   },
