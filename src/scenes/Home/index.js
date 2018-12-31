@@ -1,45 +1,80 @@
 import React from 'react';
 import {
-  View,
   Button,
-  Linking
+  RefreshControl,
+  ScrollView
 } from 'react-native';
-import {
-  AuthSession,
-  SecureStore
-} from 'expo';
+import { StackActions, NavigationActions } from 'react-navigation';
 
-import { styles } from '../../components/DesignSystem';
+import * as Utils from '../../components/Utils';
+import onBackgroundHandler from '../../utils/onBackgroundHandler';
+import { withContext } from '../../stores/context';
 
-export default class Home extends React.Component {
+class Home extends React.Component {
   static navigationOptions = {
-    title: 'Welcome to the app!',
+    header: null
   };
 
-  render() {
-    return (
-      <View style={styles.container}>
-        <Button title="Show me more of the app" onPress={this._showMoreApp} />
-        <Button title="Actually, sign me out :)" onPress={this._signOut} />
-      </View>
-    );
+  state = {
+    refreshing: false,
+    error: null,
+    accountModalVisible: false
   }
 
-  _showMoreApp = () => {
-    this.props.navigation.navigate('Other');
+  componentDidMount() {
+    this._navListener = this.props.navigation.addListener('didFocus', this._loadData);
+    this.appStateListener = onBackgroundHandler(this._onAppStateChange);
+  }
+
+  componentWillUnmount() {
+    this._navListener.remove();
+    this.appStateListener.remove();
+  }
+
+  _onAppStateChange = nextAppState => {
+    if (nextAppState.match(/background/)) {
+      this.props.navigation.navigate('Loading');
+    };
   };
 
-  _signOut = async () => {
-    // TODO: use WebView for SSO interactions
-    // logout from keycloak
-    Linking.openURL(
-      `${process.env.OAUTH_URL}/auth/realms/${process.env.OAUTH_REALM}/protocol/openid-connect/logout` +
-      `?redirect_uri=${encodeURIComponent(process.env.APP_ROOT_URL)}`
+  _loadData = async () => {
+    try {
+      this.props.context.loadUserData();
+    } catch (e) {
+      this.setState({ error: "Error loading data" });
+    }
+  }
+
+  _onRefresh = async () => {
+    this.setState({ refreshing: true })
+    await this._loadData()
+    this.setState({ refreshing: false })
+  }
+
+  render() {
+    const {
+      refreshing
+    } = this.state;
+
+    return (
+      <Utils.SafeAreaView>
+        <Utils.Container justify='flex-start' align='stretch'>
+          <ScrollView
+            refreshControl={
+              <RefreshControl
+                refreshing={refreshing}
+                onRefresh={this._onRefresh}
+              />
+            }
+          >
+            <Utils.Content paddingTop={48}>
+              <Button title="Go to profile" onPress={() => this.props.navigation.navigate('Profile')} />
+            </Utils.Content>
+          </ScrollView>
+        </Utils.Container>
+      </Utils.SafeAreaView>
     );
-
-    // delete secure store auth data
-    await SecureStore.deleteItemAsync('auth');
-
-    this.props.navigation.navigate('Auth');
-  };
+  }
 };
+
+export default withContext(Home);
