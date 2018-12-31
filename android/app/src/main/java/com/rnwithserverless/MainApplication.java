@@ -3,6 +3,10 @@ package com.rnwithserverless;
 import android.app.Application;
 
 import com.facebook.react.ReactApplication;
+import com.oblador.vectoricons.VectorIconsPackage;
+import com.oblador.keychain.KeychainPackage;
+import io.realm.react.RealmReactPackage;
+import com.learnium.RNDeviceInfo.RNDeviceInfo;
 import com.swmansion.gesturehandler.react.RNGestureHandlerPackage;
 import com.rnappauth.RNAppAuthPackage;
 import com.facebook.react.ReactNativeHost;
@@ -25,6 +29,10 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
+          new VectorIconsPackage(),
+          new KeychainPackage(),
+          new RealmReactPackage(),
+          new RNDeviceInfo(),
           new RNAppAuthPackage(),
           new RNGestureHandlerPackage()
       );

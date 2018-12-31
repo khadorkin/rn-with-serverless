@@ -107,7 +107,7 @@ android {
             abiFilters "armeabi-v7a", "x86"
         }
         manifestPlaceholders = [
-            appAuthRedirectScheme: 'com.rnwithserverless'
+            appAuthRedirectScheme: 'com.oktapreview.dev-417760'
         ]
     }
     splits {
@@ -140,6 +140,10 @@ android {
 }
 
 dependencies {
+    compile project(':react-native-vector-icons')
+    compile project(':react-native-keychain')
+    compile project(':realm')
+    compile project(':react-native-device-info')
     compile project(':react-native-gesture-handler')
     compile project(':react-native-app-auth')
     implementation fileTree(dir: "libs", include: ["*.jar"])

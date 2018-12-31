@@ -1,55 +1,70 @@
 import React from 'react';
 import {
-  View,
   Button,
-  Text
+  ActivityIndicator
 } from 'react-native';
+import { authorize } from 'react-native-app-auth';
 
-import { styles } from '../../components/DesignSystem';
+import { OAUTH_CONFIG } from '../../utils/constants';
+import * as Utils from '../../components/Utils';
 
-export default class SignIn extends React.Component {
+class SignIn extends React.Component {
   static navigationOptions = {
-    title: 'Please sign in',
+    header: null
   };
 
   state = {
-    errorCode: null,
+    err: null,
+    authorizing: false
   };
 
   render() {
-    const { errorCode } = this.state;
+    const {
+      err,
+      authorizing
+    } = this.state;
+
+    const content = !authorizing ?
+      <Button title={"Login with SSO"} onPress={this._signIn} />
+      : <ActivityIndicator size="large" color="#0000ff" />;
+
     return (
-      <View style={styles.container}>
-        <Button title="Login with Keycloak" onPress={this._signInAsync} />
-        {errorCode ? (
-          <Text>{errorCode}</Text>
-        ) : null}
-      </View>
+      <Utils.SafeAreaView>
+        <Utils.Container style={{ justifyContent: 'center' }}>
+          <Utils.Content paddingTop={48}>
+            {content}
+            {err &&
+              <Utils.Text>{err}</Utils.Text>
+            }
+          </Utils.Content>
+        </Utils.Container>
+      </Utils.SafeAreaView>
     );
-  }
+  };
 
-  _signInAsync = async () => {
-    // retrieve token from oauth server
-    //let redirectUrl = AuthSession.getRedirectUrl();
-    /*
-    let auth = await AuthSession.startAsync({
-      authUrl:
-        `${process.env.OAUTH_URL}/auth/realms/${process.env.OAUTH_REALM}/protocol/openid-connect/auth?response_type=code` +
-        `&client_id=${process.env.OAUTH_CLIENT_ID}` +
-        `&client_secret=${process.env.OAUTH_CLIENT_SECRET}` +
-        `&redirect_uri=${encodeURIComponent(process.env.APP_ROOT_URL)}`,
-    };
-    */
+  _signIn = async () => {
+    const onSuccess = this.props.navigation.getParam('onSuccess');
+    this.setState({
+      authorizing: true
+    });
+    try {
+      // sign in to get authorized info
+      const result = await authorize(OAUTH_CONFIG);
 
-    // const { type, errorCode = 'You cancel or dismissed the login' } = auth;
-    const { type = 'success', errorCode = 'You cancel or dismissed the login' } = {};
-    if (type === 'success') {
-      // store token in secure storage
-      // await SecureStore.setItemAsync('auth', JSON.stringify(auth));
-      this.props.navigation.navigate('App');
-    } else {
+      if (result && result.accessToken && result.idToken) {
+        this.props.navigation.goBack(null);
+        if (onSuccess) {
+          onSuccess({ access: result.accessToken, ID: result.idToken });
+        }
+      } else {
+        // set state with error
+        throw 'You cancel or dismissed the login';
+      }
+    } catch (err) {
       // set state with error
-      this.setState({ errorCode });
-    }
+      this.setState({ authorizing: false, err });
+    };
   };
 };
+
+export default SignIn;
