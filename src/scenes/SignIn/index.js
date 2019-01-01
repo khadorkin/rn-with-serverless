@@ -1,10 +1,8 @@
 import React from 'react';
-import {
-  Button,
-  ActivityIndicator
-} from 'react-native';
 import { authorize } from 'react-native-app-auth';
 
+import Button from '../../components/Button';
+import SigningCircle from '../../components/SigningCircle';
 import { OAUTH_CONFIG } from '../../utils/constants';
 import * as Utils from '../../components/Utils';
 
@@ -16,30 +14,6 @@ class SignIn extends React.Component {
   state = {
     err: null,
     authorizing: false
-  };
-
-  render() {
-    const {
-      err,
-      authorizing
-    } = this.state;
-
-    const content = !authorizing ?
-      <Button title={"Login with SSO"} onPress={this._signIn} />
-      : <ActivityIndicator size="large" color="#0000ff" />;
-
-    return (
-      <Utils.SafeAreaView>
-        <Utils.Container style={{ justifyContent: 'center' }}>
-          <Utils.Content paddingTop={48}>
-            {content}
-            {err &&
-              <Utils.Text>{err}</Utils.Text>
-            }
-          </Utils.Content>
-        </Utils.Container>
-      </Utils.SafeAreaView>
-    );
   };
 
   _signIn = async () => {
@@ -64,6 +38,30 @@ class SignIn extends React.Component {
       // set state with error
       this.setState({ authorizing: false, err });
     };
+  };
+
+  render() {
+    const {
+      err,
+      authorizing
+    } = this.state;
+
+    const content = !authorizing ?
+      <Button icon={'ios-lock'} iconSize={20} title="Login with SSO" primary onPress={this._signIn} />
+      : <SigningCircle animation="pulse" duration={800} iterationCount="infinite" />;
+
+    return (
+      <Utils.SafeAreaView>
+        <Utils.Container style={{ justifyContent: 'center', alignItems: (!authorizing ? 'stretch' : 'center') }}>
+          <Utils.Content paddingTop={48}>
+            {content}
+            {err &&
+              <Utils.Text>{err}</Utils.Text>
+            }
+          </Utils.Content>
+        </Utils.Container>
+      </Utils.SafeAreaView>
+    );
   };
 };
 

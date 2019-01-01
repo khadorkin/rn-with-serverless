@@ -1,12 +1,11 @@
 import React from 'react';
 import {
-  Button,
   RefreshControl,
   ScrollView
 } from 'react-native';
-import { StackActions, NavigationActions } from 'react-navigation';
 
 import * as Utils from '../../components/Utils';
+import Button from '../../components/Button';
 import onBackgroundHandler from '../../utils/onBackgroundHandler';
 import { withContext } from '../../stores/context';
 
@@ -32,8 +31,10 @@ class Home extends React.Component {
   }
 
   _onAppStateChange = nextAppState => {
+    const { keys } = this.props.context
     if (nextAppState.match(/background/)) {
-      this.props.navigation.navigate('Loading');
+      if (!keys)
+        this.props.navigation.navigate('Loading');
     };
   };
 
@@ -68,7 +69,7 @@ class Home extends React.Component {
             }
           >
             <Utils.Content paddingTop={48}>
-              <Button title="Go to profile" onPress={() => this.props.navigation.navigate('Profile')} />
+              <Button icon={'ios-person'} iconSize={20} title={"Go to profile"} primary onPress={() => this.props.navigation.navigate('Profile')} />
             </Utils.Content>
           </ScrollView>
         </Utils.Container>

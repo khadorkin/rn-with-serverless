@@ -130,7 +130,7 @@ class App extends Component {
     return (
       <View style={{ backgroundColor: Colors.background, flex: 1 }} >
         <Context.Provider value={contextProps}>
-          <StatusBar barStyle="light-content" hidden={true} backgroundColor={Colors.background} translucent={true} />
+          <StatusBar barStyle="dark-content" hidden={false} backgroundColor={Colors.background} translucent={true} />
           <AppContainer uriPrefix={prefix} />
         </Context.Provider>
       </View>

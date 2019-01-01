@@ -1,10 +1,10 @@
 import React from 'react';
-import { TouchableOpacity } from 'react-native';
-import { Colors } from '../DesignSystem';
+import { TouchableOpacity, View } from 'react-native';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 
 import * as Utils from '../Utils';
-import { Header, HeaderWrapper } from './elements';
+import { Colors } from '../DesignSystem';
+import { Header, HeaderWrapper, Button } from './elements';
 
 class NavigationHeader extends React.Component {
   _renderLeftElement = (onBack, leftButton) => {
@@ -12,16 +12,13 @@ class NavigationHeader extends React.Component {
 
     if (onBack && !leftButton) {
       element = (
-        <TouchableOpacity style={{ padding: 12 }} onPress={onBack} testID='HeaderBack'>
-          <Ionicons
-            name='ios-arrow-round-back'
-            size={36}
-            color={Colors.primaryText}
-          />
-        </TouchableOpacity>
+        <View style={{ borderRadius: 24, backgroundColor: '#FFF', width: 48,height: 48 }}>
+          <Button floating={false} rippleColor={Colors.secondaryText} round icon={'ios-arrow-round-back'}
+            iconSize={36} onPress={onBack} testID='HeaderBack' />
+        </View>
       )
     } else {
-      element = leftButton
+      element = leftButton;
     }
     return (
       <Utils.View margin={5} position='absolute' left={10}>
@@ -59,7 +56,7 @@ class NavigationHeader extends React.Component {
     const { title, onClose, rightButton, onBack, leftButton, onSearch, onSearchPressed } = this.props;
 
     return (
-      <HeaderWrapper>
+      <HeaderWrapper paddingTop={16}>
         <Header border={false}>
           <React.Fragment>
             {this._renderLeftElement(onBack, leftButton)}

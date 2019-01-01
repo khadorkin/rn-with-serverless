@@ -141,7 +141,7 @@ VerticalSpacer.defaultProps = {
 };
 
 export const Text = styled.Text`
-  color: ${() => Colors.primaryText};
+  color: ${(props) => props.color ? props.color : Colors.primaryText};
   ${props => props.size && css` font-size: ${FontSize['small']}px`};
   ${props => props.light && css` font-family: rubik-light`};
   ${props => props.padding && css` padding: ${props.padding}px`};
@@ -178,7 +178,7 @@ export const Item = styled.View`
 export const Label = styled.View`
   padding: ${Spacing.small}px;
   border-radius: 4px;
-  background-color: ${props => props.color};
+  color: ${(props) => props.color ? props.color : Colors.primaryText};
 `;
 
 export const Tag = styled.View`
