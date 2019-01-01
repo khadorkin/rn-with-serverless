@@ -1,10 +1,10 @@
 import React from 'react';
 import {
-  View,
-  ActivityIndicator
+  View
 } from 'react-native';
 import { StackActions, NavigationActions } from 'react-navigation';
 
+import SigningCircle from '../../components/SigningCircle';
 import { getStore } from '../../stores/secrets';
 import { withContext } from '../../stores/context';
 import { styles } from '../../components/DesignSystem';
@@ -31,7 +31,7 @@ class Loading extends React.Component {
     });
     setTimeout(() => {
       this.props.context.setKeys(keys, () => this.props.navigation.dispatch(resetAction));
-    }, 2000);
+    }, 1000);
   };
 
   _askCredentials = async () => {
@@ -53,7 +53,7 @@ class Loading extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        <ActivityIndicator size="large" color="#0000ff" />
+        <SigningCircle animation="pulse" duration={800} iterationCount="infinite" />
       </View>
     );
   }

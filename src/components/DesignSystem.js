@@ -20,13 +20,14 @@ export const ButtonSize = {
 }
 
 export const Colors = {
-  background: '#33337E',
+  background: '#FFFFFF',
   RGB: {
     background: '51,51,126',
   },
-  primaryText: '#FFFFFF',
+  primaryText: '#FE7163',
   secondaryText: '#66688F',
-  summaryText: '#999bb5'
+  summaryText: '#999bb5',
+  greyBlue: '#9c9eb9'
 }
 
 const { width, height } = Dimensions.get('window');
