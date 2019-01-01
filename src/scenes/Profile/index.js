@@ -1,12 +1,11 @@
 import React from 'react';
-import {
-  Button
-} from 'react-native';
 import { StackActions, NavigationActions } from 'react-navigation';
 
 import * as Utils from '../../components/Utils';
+import Button from '../../components/Button';
 import NavigationHeader from '../../components/Navigation/Header';
 import { withContext } from '../../stores/context';
+import { Colors } from '../../components/DesignSystem';
 
 class Profile extends React.Component {
   static navigationOptions = {
@@ -44,17 +43,24 @@ class Profile extends React.Component {
           <Utils.Content paddingTop={0}>
             {account && account.name &&
               [
-                <Utils.Text key='labelName'>{account.name}</Utils.Text>,
+                <Utils.Label key='name-label'>
+                  <Utils.Text key='name' color={Colors.secondaryText}>Name</Utils.Text>
+                </Utils.Label>,
+                <Utils.Text key='name'>{account.name}</Utils.Text>,
                 <Utils.VerticalSpacer key='spacerName' size='medium' />
               ]
             }
             {account && account.email &&
               [
-                <Utils.Text key='labelEmail'>{account.email}</Utils.Text>,
+                <Utils.Label key='email-label'>
+                  <Utils.Text key='name' color={Colors.secondaryText}>E-mail</Utils.Text>
+                </Utils.Label>,
+                <Utils.Text key='email'>{account.email}</Utils.Text>,
                 <Utils.VerticalSpacer key='spacerEmail' size='medium' />
               ]
             }
-            <Button title="Sign Out" onPress={this._signOut} />
+            <Button title="Sign Out" primary icon={'ios-log-out'}
+              iconSize={20} onPress={this._signOut} />
           </Utils.Content>
         </Utils.Container>
       </Utils.SafeAreaView>
