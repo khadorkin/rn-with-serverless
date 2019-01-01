@@ -19,7 +19,7 @@ export const View = styled.View`
 `;
 
 export const Icon = styled(Ionicons)`
-  padding: ${(props) => props.round ? '6px 14px' : '0 14px 0 6px'};
+  padding: ${(props) => props.round ? '3px 10px' : '0 14px 0 6px'};
   color: ${(props) => props.primary ? '#FFFFFF' : '#FE7163'};
 `;
 
