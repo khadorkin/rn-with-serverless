@@ -12,9 +12,9 @@ class NavigationHeader extends React.Component {
 
     if (onBack && !leftButton) {
       element = (
-        <View style={{ borderRadius: 24, backgroundColor: '#FFF', width: 48,height: 48 }}>
+        <View style={{ borderRadius: 21, backgroundColor: '#FFF', width: 42,height: 42 }}>
           <Button floating={false} rippleColor={Colors.secondaryText} round icon={'ios-arrow-round-back'}
-            iconSize={36} onPress={onBack} testID='HeaderBack' />
+            iconSize={32} onPress={onBack} testID='HeaderBack' />
         </View>
       )
     } else {
