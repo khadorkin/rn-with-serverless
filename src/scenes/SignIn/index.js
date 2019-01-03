@@ -47,7 +47,7 @@ class SignIn extends React.Component {
     } = this.state;
 
     const content = !authorizing ?
-      <Button icon={'ios-lock'} iconSize={20} title="Login with SSO" primary onPress={this._signIn} />
+      <Button icon={'ios-lock'} iconSize={20} title="Login with SSO" primary floating onPress={this._signIn} />
       : <SigningCircle animation="pulse" duration={800} iterationCount="infinite" />;
 
     return (
@@ -55,8 +55,11 @@ class SignIn extends React.Component {
         <Utils.Container style={{ justifyContent: 'center', alignItems: (!authorizing ? 'stretch' : 'center') }}>
           <Utils.Content paddingTop={48}>
             {content}
-            {err &&
-              <Utils.Text>{err}</Utils.Text>
+            {(err && !authorizing) &&
+              [
+                <Utils.VerticalSpacer key='spacer' size='medium' />,
+                <Utils.Text key='error'>{err.message}</Utils.Text>
+              ]
             }
           </Utils.Content>
         </Utils.Container>

@@ -112,8 +112,8 @@ export const Img = View.withComponent(Image);
 
 export const Row = styled(View)`
   flex-direction: row;
-  align-items: ${() => this.defaultProps.alignItems};
-  justify-content: ${() => this.defaultProps.justifyContent};
+  align-items: ${(props) => props.align};
+  justify-content: ${(props) => props.justify};
   ${props => props.background && css` background-color: ${props.background}`};
   ${props => props.position && css` position: ${props.position}`};
   ${props => props.wrap && css` flex-wrap: ${props.wrap}`};

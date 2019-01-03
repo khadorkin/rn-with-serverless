@@ -16,7 +16,7 @@ const ButtonComponent = ({
     (primary ? 'white' : '#f3f3f3') : rippleColor
 }) => {
   return (
-    <Button background={TouchableNativeFeedback.Ripple(rippleColor, round)}  onPress={() => { setTimeout(() => { onPress() }, 100) }}>
+    <Button background={TouchableNativeFeedback.Ripple(rippleColor, round)}  onPress={() => { setTimeout(() => { onPress() }, 50) }}>
       <View primary={primary} round={round} floating={floating} pointerEvents='box-only'>
         {icon && 
           <Icon name={icon} size={iconSize} primary={primary} round={round} color={Colors.primaryText} />
